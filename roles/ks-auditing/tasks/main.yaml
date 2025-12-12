@@ -41,7 +41,7 @@
 
 - name: ks-auditing | Importing ks-auditing status
   shell: >
-    {{ bin_dir }}/kubectl patch cc ks-installer
+    {{ bin_dir }}/kubectl patch clusterconfigurations.installer.kubesphere.io ks-installer
     --type merge
     -p '{"status": {"auditing": {"status": "enabled", "enabledTime": "{{ lookup('pipe','date  +%Y-%m-%dT%H:%M:%S%Z') }}"}}}'
     -n kubesphere-system

@@ -30,7 +30,7 @@
 - block:
   - name: KubeSphere | Updating ks-core status
     shell: >
-      {{ bin_dir }}/kubectl patch cc ks-installer
+      {{ bin_dir }}/kubectl patch clusterconfigurations.installer.kubesphere.io ks-installer
       --type merge
       -p '{"status": {"core": {"migration": true}}}'
       -n kubesphere-system

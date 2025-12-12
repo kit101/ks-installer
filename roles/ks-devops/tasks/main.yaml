@@ -63,13 +63,13 @@
 
 - name: Get Argo CD installation
   shell: >
-    {{ bin_dir }}/kubectl get cc -n kubesphere-system ks-installer -o=jsonpath='{.spec.devops.argocd.installation}'
+    {{ bin_dir }}/kubectl get clusterconfigurations.installer.kubesphere.io -n kubesphere-system ks-installer -o=jsonpath='{.spec.devops.argocd.installation}'
   register: argocd_installation
   ignore_errors: true
 
 - name: Get Argo CD namespace
   shell: |
-    ns=$({{ bin_dir }}/kubectl get cc -n kubesphere-system ks-installer -o=jsonpath='{.spec.devops.argocd.namespace}')
+    ns=$({{ bin_dir }}/kubectl get clusterconfigurations.installer.kubesphere.io -n kubesphere-system ks-installer -o=jsonpath='{.spec.devops.argocd.namespace}')
     echo -n ${ns:-argocd}
   register: argocd_namespace
   ignore_errors: true
@@ -241,7 +241,7 @@
 
 - name: ks-devops | Importing ks-devops status
   shell: >
-    {{ bin_dir }}/kubectl patch cc ks-installer
+    {{ bin_dir }}/kubectl patch clusterconfigurations.installer.kubesphere.io ks-installer
     --type merge
     -p '{"status": {"devops": {"status": "enabled", "enabledTime": "{{ lookup('pipe','date  +%Y-%m-%dT%H:%M:%S%Z') }}"}}}'
     -n kubesphere-system

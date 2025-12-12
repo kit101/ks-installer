@@ -30,7 +30,7 @@ do
 done
 
 # delete kubefed
-kubectl get cc -n kubesphere-system ks-installer -o jsonpath="{.status.multicluster}" | grep enable
+kubectl get clusterconfigurations.installer.kubesphere.io -n kubesphere-system ks-installer -o jsonpath="{.status.multicluster}" | grep enable
 if [[ $? -eq 0 ]]; then
   # delete kubefed types resources
   for kubefed in `kubectl api-resources --namespaced=true --api-group=types.kubefed.io -o name`

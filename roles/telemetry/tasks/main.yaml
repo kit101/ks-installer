@@ -22,7 +22,7 @@
 
 - name: Get ks version
   shell: >
-     {{ bin_dir }}/kubectl get cc -n kubesphere-system ks-installer -o=jsonpath='{.status.core.version}'
+     {{ bin_dir }}/kubectl get clusterconfigurations.installer.kubesphere.io -n kubesphere-system ks-installer -o=jsonpath='{.status.core.version}'
   register: ks
   ignore_errors: true
 
@@ -40,7 +40,7 @@
 
 - name: Get module
   shell: >
-    {{ bin_dir }}/kubectl get cc -n kubesphere-system ks-installer -o json | jq '.status' | jq 'keys' | grep -v "clusterId" | jq 'join("-")'
+    {{ bin_dir }}/kubectl get clusterconfigurations.installer.kubesphere.io -n kubesphere-system ks-installer -o json | jq '.status' | jq 'keys' | grep -v "clusterId" | jq 'join("-")'
   register: mod
   ignore_errors: true
 
@@ -70,7 +70,7 @@
 
 - name: Get clusterId by cc of ks-installer
   shell: >
-     {{ bin_dir }}/kubectl get cc ks-installer -n kubesphere-system -o=jsonpath='{.status.clusterId}'
+     {{ bin_dir }}/kubectl get clusterconfigurations.installer.kubesphere.io ks-installer -n kubesphere-system -o=jsonpath='{.status.clusterId}'
   register: check
   ignore_errors: true
 
@@ -83,13 +83,13 @@
 
 - name: clusterId patch to cc of ks-installer
   shell: >
-     {{ bin_dir }}/kubectl patch cc ks-installer -n kubesphere-system --type merge -p '{"status": {"clusterId": "{{ cluster[ 'stdout' ] }}"}}'
+     {{ bin_dir }}/kubectl patch clusterconfigurations.installer.kubesphere.io ks-installer -n kubesphere-system --type merge -p '{"status": {"clusterId": "{{ cluster[ 'stdout' ] }}"}}'
   when: check.stdout == ""
   ignore_errors: true
 
 - name: Get clusterId
   shell: >
-     {{ bin_dir }}/kubectl get cc ks-installer -n kubesphere-system -o=jsonpath='{.status.clusterId}'
+     {{ bin_dir }}/kubectl get clusterconfigurations.installer.kubesphere.io ks-installer -n kubesphere-system -o=jsonpath='{.status.clusterId}'
   register: cluster
   ignore_errors: true
 

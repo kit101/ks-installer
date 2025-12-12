@@ -167,7 +167,7 @@
 
 - name: KubeSphere | Importing ks-core status
   shell: >
-    {{ bin_dir }}/kubectl patch cc ks-installer
+    {{ bin_dir }}/kubectl patch clusterconfigurations.installer.kubesphere.io ks-installer
     --type merge
     -p '{"status": {"core": {"status": "enabled", "enabledTime": "{{ lookup('pipe','date  +%Y-%m-%dT%H:%M:%S%Z') }}"}}}'
     -n kubesphere-system

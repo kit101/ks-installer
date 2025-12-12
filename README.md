@@ -90,7 +90,7 @@ kubectl -n kubesphere-monitoring-system create secret generic kube-etcd-client-c
 > Note: Please make sure there is enough CPU and memory available in your cluster.
 
 ```bash
-kubectl edit cc ks-installer -n kubesphere-system
+kubectl edit clusterconfigurations.installer.kubesphere.io ks-installer -n kubesphere-system
 ```
 > Note: When you're enabling KubeEdge, please set advertiseAddress as below and expose corresponding ports correctly before you run or restart ks-installer. Please refer to [KubeEdge Guide](https://kubesphere.io/docs/pluggable-components/kubeedge/) for more details.
 ```yaml

@@ -16,7 +16,7 @@
 
 - name: Monitoring | Importing ks-monitoring status
   shell: >
-    {{ bin_dir }}/kubectl patch cc ks-installer
+    {{ bin_dir }}/kubectl patch clusterconfigurations.installer.kubesphere.io ks-installer
     --type merge
     -p '{"status": {"monitoring": {"status": "enabled", "enabledTime": "{{ lookup('pipe','date  +%Y-%m-%dT%H:%M:%S%Z') }}"}}}'
     -n kubesphere-system

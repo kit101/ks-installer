@@ -83,7 +83,7 @@
 
 - name: servicemesh | set servicemesh status enabled
   shell: >
-    {{ bin_dir }}/kubectl patch cc ks-installer
+    {{ bin_dir }}/kubectl patch clusterconfigurations.installer.kubesphere.io ks-installer
     --type merge
     -p '{"status": {"servicemesh": {"status": "enabled", "enabledTime": "{{ lookup('pipe','date  +%Y-%m-%dT%H:%M:%S%Z') }}"}}}'
     -n kubesphere-system
@@ -96,7 +96,7 @@
 
 - name: servicemesh | set servicemesh status failed
   shell: >
-    {{ bin_dir }}/kubectl patch cc ks-installer
+    {{ bin_dir }}/kubectl patch clusterconfigurations.installer.kubesphere.io ks-installer
     --type merge
     -p '{"status": {"servicemesh": {"status": "failed", "enabledTime": "{{ lookup('pipe','date  +%Y-%m-%dT%H:%M:%S%Z') }}"}}}'
     -n kubesphere-system

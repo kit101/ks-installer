@@ -92,7 +92,7 @@ kubectl -n kubesphere-monitoring-system create secret generic kube-etcd-client-c
 2. 编辑 ClusterConfiguration 开启可插拔的功能组件:
 
 ```bash
-kubectl edit cc ks-installer -n kubesphere-system
+kubectl edit clusterconfigurations.installer.kubesphere.io ks-installer -n kubesphere-system
 ```
 
 > 按功能需求编辑配置文件之后，退出等待生效即可，如长时间未生效请使用如下命令查看相关日志:
