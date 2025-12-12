@@ -1,0 +1,50 @@
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+name: Publish
+
+env:
+  # TODO: Change variable to your image's name.
+  IMAGE_NAME: ks-installer
+  IMAGE_REPO: kit101z
+
+jobs:
+  release-linux-amd64:
+    runs-on: ubuntu-latest
+    if: github.repository == 'kit101/ks-installer'
+    permissions:
+      contents: write  # 必须！用于 create-release
+      packages: write  # 如果后续要推送到 GHCR，也需要
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get Version
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        run: |
+          gh release create ${{ steps.get_version.outputs.VERSION }} \
+            --title "${{ steps.get_version.outputs.VERSION }}" \
+            --notes "Release ${{ steps.get_version.outputs.VERSION }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: all
+
+      - name: Set up Docker buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Push image
+        run: |
+          IMAGE=$IMAGE_REPO/$IMAGE_NAME:${{ steps.get_version.outputs.VERSION }}
+          docker buildx build --platform linux/amd64,linux/arm64 --push -f Dockerfile.complete -t $IMAGE .
+          echo "Push $IMAGE success!"
