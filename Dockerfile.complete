@@ -3,9 +3,9 @@ FROM golang:1.17-alpine
 ARG appVersion=latest
 
 RUN apk --no-cache add git ca-certificates && \
-    git clone --branch v1.0.0-beta.5 https://github.com/flant/shell-operator.git /go/src/github.com/flant/shell-operator
+    git clone --branch v1.0.12 https://github.com/flant/shell-operator.git /go/src/github.com/flant/shell-operator
 
-RUN go get -d github.com/flant/shell-operator/...
+# RUN go get -d github.com/flant/shell-operator/...
 
 WORKDIR /go/src/github.com/flant/shell-operator
 
