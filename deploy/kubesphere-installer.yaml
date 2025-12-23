@@ -270,6 +270,7 @@ roleRef:
   kind: ClusterRole
   name: ks-installer
   apiGroup: rbac.authorization.k8s.io
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -278,17 +279,17 @@ metadata:
   namespace: kubesphere-system
   labels:
     app: ks-installer
-spec:
-  extravars: |-
+data:
+  extravars: |
     ---
     ansible_connection: local
-
+    
+    # 设置额外变量. More in repo, e.g. https://github.com/kit101/ks-installer/blob/v3.4.1-k1.patch.2/roles/ks-core/ks-core/templates/custom-values-ks-core.yaml.j2    
     ks_image_pull_policy: IfNotPresent
-    # 设置额外变量. More in repo, e.g. https://github.com/kit101/ks-installer/blob/v3.4.1-k1.patch.2/roles/ks-core/ks-core/templates/custom-values-ks-core.yaml.j2
-    # ks_apiserver_repo: kit101z/ks-apiserver
-    # ks_apiserver_tag: v3.4.1-k1
-    # ks_console_repo: kit101z/ks-console
-    # ks_console_tag: v3.4.1-k1
+    ks_apiserver_repo: kit101z/ks-apiserver
+    ks_apiserver_tag: v3.4.1-k1
+    ks_console_repo: kit101z/ks-console
+    ks_console_tag: v3.4.1-k1
     # ks_kubectl_repo: kit101z/kubectl
     # ks_kubectl_tag: v1.23
 
@@ -328,7 +329,7 @@ spec:
           name: host-time
           readOnly: true
         - mountPath: /kubesphere/results/env/extravars
-          name: custom-extravars
+          name: extravars
           subPath: extravars
       volumes:
       - name: host-time

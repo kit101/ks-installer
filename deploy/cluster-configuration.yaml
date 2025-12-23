@@ -14,6 +14,7 @@ spec:
     jwtSecret: ""           # Keep the jwtSecret consistent with the Host Cluster. Retrieve the jwtSecret by executing "kubectl -n kubesphere-system get cm kubesphere-config -o yaml | grep -v "apiVersion" | grep jwtSecret" on the Host Cluster.
   local_registry: ""        # Add your private registry address if it is needed.
 #  dev_tag: ""               # Add your kubesphere image tag you want to install, by default it's same as ks-installer release version.
+  local_registry: ""        # Add your private registry address if it is needed.
   etcd:
     monitoring: false       # Enable or disable etcd monitoring dashboard installation. You have to create a Secret for etcd before you enable it.
     endpointIps: localhost  # etcd cluster EndpointIps. It can be a bunch of IPs here.
@@ -204,5 +205,6 @@ spec:
   # disable telemetry
   telemetry_enabled: false
   terminal:
-    # image: 'alpine:3.15' # There must be an nsenter program in the image
+    image: 'alpine:3' # There must be an nsenter program in the image
     timeout: 600         # Container timeout, if set to 0, no timeout will be used. The unit is seconds
+  telemetry_enabled: false
