@@ -284,12 +284,12 @@ data:
     ---
     ansible_connection: local
     
-    # 设置额外变量. More in repo, e.g. https://github.com/kit101/ks-installer/blob/v3.4.1-k1.patch.2/roles/ks-core/ks-core/templates/custom-values-ks-core.yaml.j2    
+    # 设置额外变量. More in repo, e.g. https://github.com/kit101/ks-installer/blob/v3.4.1-k1.patch.5/roles/ks-core/ks-core/templates/custom-values-ks-core.yaml.j2
     ks_image_pull_policy: IfNotPresent
     ks_apiserver_repo: kit101z/ks-apiserver
     ks_apiserver_tag: v3.4.1-k1
     ks_console_repo: kit101z/ks-console
-    ks_console_tag: v3.4.1-k1
+    ks_console_tag: v3.4.1-k4
     # ks_kubectl_repo: kit101z/kubectl
     # ks_kubectl_tag: v1.23
 
@@ -315,7 +315,7 @@ spec:
       containers:
       - name: installer
         # use a specific version of ks-installer
-        image: kit101z/ks-installer:v3.4.1-k1.patch.3
+        image: kit101z/ks-installer:v3.4.1-k1.patch.5
         imagePullPolicy: "Always"
         resources:
           limits:
